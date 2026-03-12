@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 导航站 - AI 工具 | 网盘搜索 | 跨境电商</title>
+    <meta name="description" content="一站式 AI 导航站，收录最新 AI 工具、网盘搜索资源、跨境电商平台">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* 顶部导航 */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+        
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+        
+        .nav-menu a:hover {
+            opacity: 0.8;
+        }
+        
+        /* 搜索区 */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 60px 20px;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .search-box {
+            max-width: 700px;
+            margin: 0 auto;
+            display: flex;
+            background: white;
+            border-radius: 50px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .search-box input {
+            flex: 1;
+            padding: 18px 30px;
+            border: none;
+            font-size: 16px;
+            outline: none;
+        }
+        
+        .search-box button {
+            padding: 18px 40px;
+            background: #667eea;
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .search-box button:hover {
+            background: #764ba2;
+        }
+        
+        /* 分类标签 */
+        .categories {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 30px 20px;
+            flex-wrap: wrap;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .category-tab {
+            padding: 12px 30px;
+            background: #f0f0f0;
+            border-radius: 25px;
+            text-decoration: none;
+            color: #666;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .category-tab:hover,
+        .category-tab.active {
+            background: #667eea;
+            color: white;
+        }
+        
+        /* 资源卡片 */
+        .resources {
+            padding: 40px 20px;
+        }
+        
+        .section-title {
+            font-size: 28px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+        }
+        
+        .resource-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            gap: 20px;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .resource-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+        
+        .resource-content {
+            flex: 1;
+        }
+        
+        .resource-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        
+        .resource-desc {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .resource-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        
+        .tag {
+            padding: 4px 12px;
+            background: #f0f0f0;
+            border-radius: 12px;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .resource-link {
+            display: inline-block;
+            padding: 8px 20px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+        
+        .resource-link:hover {
+            background: #764ba2;
+        }
+        
+        /* 页脚 */
+        .footer {
+            background: #333;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 60px;
+        }
+        
+        .footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="/" class="logo">🚀 AI 导航站</a>
+                <div class="nav-menu">
+                    <a href="#ai-tools">AI 工具</a>
+                    <a href="#cloud-search">网盘搜索</a>
+                    <a href="#ecommerce">跨境电商</a>
+                    <a href="#about">关于</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 搜索区 -->
+    <section class="hero">
+        <div class="container">
+            <h1>发现最好的 AI 工具和资源</h1>
+            <p>一站式导航平台，收录最新 AI 工具、网盘资源、跨境电商平台</p>
+            
+            <div class="search-box">
+                <input type="text" placeholder="搜索 AI 工具、网盘资源、电商平台...">
+                <button>搜索</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 分类标签 -->
+    <div class="categories">
+        <a href="#all" class="category-tab active">全部</a>
+        <a href="#ai-tools" class="category-tab">🤖 AI 工具</a>
+        <a href="#cloud-search" class="category-tab">☁️ 网盘搜索</a>
+        <a href="#ecommerce" class="category-tab">🌐 跨境电商</a>
+        <a href="#education" class="category-tab">📚 教育考试</a>
+        <a href="#design" class="category-tab">🎨 设计工具</a>
+    </div>
+
+    <!-- 资源列表 -->
+    <div class="resources">
+        <div class="container">
+            <!-- AI 工具 -->
+            <h2 class="section-title" id="ai-tools">🤖 AI 工具</h2>
+            <div class="resource-grid">
+                <!-- OpenClaw -->
+                <div class="resource-card">
+                    <div class="resource-icon" style="background: #FFE5E5;">🦞</div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">OpenClaw</h3>
+                        <p class="resource-desc">开源 AI 自动化框架，零门槛使用 AI 技能，支持微博自动发布、热点追踪等功能</p>
+                        <div class="resource-tags">
+                            <span class="tag">自动化</span>
+                            <span class="tag">开源</span>
+                            <span class="tag">免费</span>
+                        </div>
+                        <a href="https://github.com/openclaw/openclaw" target="_blank" class="resource-link">访问官网 →</a>
+                    </div>
+                </div>
+
+                <!-- ChatGPT -->
+                <div class="resource-card">
+                    <div class="resource-icon" style="background: #E5F4FF;">💬</div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">ChatGPT</h3>
+                        <p class="resource-desc">最强 AI 对话助手，写作、编程、学习全能，工作效率提升神器</p>
+                        <div class="resource-tags">
+                            <span class="tag">对话</span>
+                            <span class="tag">写作</span>
+                            <span class="tag">编程</span>
+                        </div>
+                        <a href="https://chat.openai.com" target="_blank" class="resource-link">访问官网 →</a>
+                    </div>
+                </div>
+
+                <!-- Midjourney -->
+                <div class="resource-card">
+                    <div class="resource-icon" style="background: #FFF4E5;">🎨</div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">Midjourney</h3>
+                        <p class="resource-desc">AI 绘画神器，输入文字即可生成精美图片，创意无限</p>
+                        <div class="resource-tags">
+                            <span class="tag">绘画</span>
+                            <span class="tag">设计</span>
+                            <span class="tag">创意</span>
+                        </div>
+                        <a href="https://midjourney.com" target="_blank" class="resource-link">访问官网 →</a>
+                    </div>
+                </div>
+
+                <!-- Notion AI -->
+                <div class="resource-card">
+                    <div class="resource-icon" style="background: #F0F0F0;">📝</div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">Notion AI</h3>
+                        <p class="resource-desc">智能笔记助手，自动总结、写作、翻译，知识管理更高效</p>
+                        <div class="resource-tags">
+                            <span class="tag">笔记</span>
+                            <span class="tag">写作</span>
+                            <span class="tag">效率</span>
+                        </div>
+                        <a href="https://notion.so" target="_blank" class="resource-link">访问官网 →</a>
+                    </div>
+                </div>
+
+                <!-- GitHub Copilot -->
+                <div class="resource-card">
+                    <div class="resource-icon" style="background: #E5E5FF;">💻</div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">GitHub Copilot</h3>
+                        <p class="resource-desc">AI 编程助手，自动补全代码，提升开发效率</p>
+                        <div class="resource-tags">
+                            <span class="tag">编程</span>
+                            <span class="tag">开发</span>
+                            <span class="tag">效率</span>
+                        </div>
+                        <a href="https://github.com/features/copilot" target="_blank" class="resource-link">访问官网 →</a>
+                    </div>
+                </div>
+
+                <!-- Runway -->
+                <div class="resource-card">
+                    <div class="resource-icon" style="background: #FFE5F0;">🎬</div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">Runway</h3>
+                        <p class="resource-desc">AI 视频生成和编辑工具，文字生成视频，创意无限</p>
+                        <div class="resource-tags">
+                            <span class="tag">视频</span>
+                            <span class="tag">生成</span>
+                            <span class="tag">编辑</span>
+                        </div>
+                        <a href="https://runwayml.com" target="_blank" class="resource-link">访问官网 →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 网盘搜索 -->
+            <h2 class="section-title" id="cloud-search" style="margin-top: 60px;">☁️ 网盘搜索</h2>
+            <div class="resource-grid">
+                <!-- 百度网盘 -->
+                <div class="resource-card">
+                    <div class="resource-icon" style="background: #E5F4FF;">☁️</div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">百度网盘</h3>
+                        <p class="resource-desc">国内最大网盘，资源丰富，支持搜索、下载、在线预览</p>
+                        <div class="resource-tags">
+                            <span class="tag">网盘</span>
+                            <span class="tag">存储</span>
+                            <span class="tag">分享</span>
+                        </div>
+                        <a href="https://pan.baidu.com" target="_blank" class="resource-link">访问官网 →</a>
+                    </div>
+                </div>
+
+                <!-- 阿里云盘 -->
+                <div class="resource-card">
+                    <div class="resource-icon" style="background: #FFF4E5;">☁️</div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">阿里云盘</h3>
+                        <p class="resource-desc">不限速网盘，体验优秀，支持高清视频在线播放</p>
+                        <div class="resource-tags">
+                            <span class="tag">网盘</span>
+                            <span class="tag">不限速</span>
+                            <span class="tag">高清</span>
+                        </div>
+                        <a href="https://www.aliyundrive.com" target="_blank" class="resource-link">访问官网 →</a>
+                    </div>
+                </div>
+
+                <!-- 皮卡搜 -->
+                <div class="resource-card">
+                    <div class="resource-icon" style="background: #E5FFE5;">🔍</div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">皮卡搜</h3>
+                        <p class="resource-desc">专业百度网盘搜索引擎，资源海量，更新及时</p>
+                        <div class="resource-tags">
+                            <span class="tag">搜索</span>
+                            <span class="tag">网盘</span>
+                            <span class="tag">资源</span>
+                        </div>
+                        <a href="https://www.pikasoo.top" target="_blank" class="resource-link">访问搜索 →</a>
+                    </div>
+                </div>
+
+                <!-- 盘搜搜 -->
+                <div class="resource-card">
+                    <div class="resource-icon" style="background: #F0F0FF;">🔍</div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">盘搜搜</h3>
+                        <p class="resource-desc">网盘资源搜索引擎，支持百度网盘、阿里云盘等</p>
+                        <div class="resource-tags">
+                            <span class="tag">搜索</span>
+                            <span class="tag">多平台</span>
+                        </div>
+                        <a href="https://www.pansoso.com" target="_blank" class="resource-link">访问搜索 →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 跨境电商 -->
+            <h2 class="section-title" id="ecommerce" style="margin-top: 60px;">🌐 跨境电商</h2>
+            <div class="resource-grid">
+                <!-- Shopify -->
+                <div class="resource-card">
+                    <div class="resource-icon" style="background: #E5FFE5;">🛒</div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">Shopify</h3>
+                        <p class="resource-desc">全球领先的电商建站平台，无需技术基础，快速搭建独立站</p>
+                        <div class="resource-tags">
+                            <span class="tag">建站</span>
+                            <span class="tag">电商</span>
+                            <span class="tag">独立站</span>
+                        </div>
+                        <a href="https://www.shopify.com" target="_blank" class="resource-link">访问官网 →</a>
+                    </div>
+                </div>
+
+                <!-- Amazon -->
+                <div class="resource-card">
+                    <div class="resource-icon" style="background: #FFF4E5;">🛒</div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">Amazon</h3>
+                        <p class="resource-desc">全球最大电商平台，流量巨大，适合品牌出海</p>
+                        <div class="resource-tags">
+                            <span class="tag">平台</span>
+                            <span class="tag">流量</span>
+                            <span class="tag">品牌</span>
+                        </div>
+                        <a href="https://www.amazon.com" target="_blank" class="resource-link">访问官网 →</a>
+                    </div>
+                </div>
+
+                <!-- TikTok Shop -->
+                <div class="resource-card">
+                    <div class="resource-icon" style="background: #FFE5F0;">📱</div>
+                    <div class="resource-content">
+                        <h3 class="resource-title">TikTok Shop</h3>
+                        <p class="resource-desc">短视频电商新模式，流量红利期</p>
+                        <div class="resource-tags">
+                            <span class="tag">短视频</span>
+                            <span class="tag">直播</span>
+                            <span class="tag">红利</span>
+                        </div>
+                        <a href="https://www.tiktok.com" target="_blank" class="resource-link">访问官网 →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 AI 导航站。All rights reserved.</p>
+            <p style="margin-top: 15px;">
+                <a href="#">关于我们</a> |
+                <a href="#">联系方式</a> |
+                <a href="#">提交收录</a> |
+                <a href="#">隐私政策</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

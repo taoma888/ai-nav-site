@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>跨境电商 - AI 导航站</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            min-height: 100vh;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        
+        header {
+            background: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 24px; font-weight: bold; color: #f5576c; text-decoration: none; }
+        .nav-links a { margin-left: 30px; text-decoration: none; color: #333; }
+        
+        .page-title {
+            text-align: center;
+            padding: 60px 20px;
+            color: white;
+            margin-bottom: 30px;
+        }
+        .page-title h1 { font-size: 42px; margin-bottom: 15px; }
+        .page-title p { font-size: 20px; opacity: 0.9; }
+        
+        .platforms {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .platform-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .platform-card h3 {
+            color: #f5576c;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        .platform-card p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .platform-card .features {
+            margin-bottom: 20px;
+        }
+        .platform-card .features span {
+            display: inline-block;
+            padding: 5px 12px;
+            background: #f0f0f0;
+            border-radius: 12px;
+            font-size: 12px;
+            color: #666;
+            margin: 0 5px 5px 0;
+        }
+        .platform-card a {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #f5576c;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+        }
+        .platform-card a:hover { background: #f093fb; }
+        
+        .guide {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        .guide h2 {
+            color: #f5576c;
+            margin-bottom: 20px;
+        }
+        .guide ol {
+            padding-left: 20px;
+            color: #666;
+        }
+        .guide li {
+            padding: 10px 0;
+            line-height: 1.8;
+        }
+        
+        .tools {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .tool-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .tool-card h4 {
+            color: #f5576c;
+            margin-bottom: 10px;
+        }
+        .tool-card p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        footer {
+            background: rgba(0,0,0,0.2);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="/" class="logo">🌐 AI 导航站</a>
+                <div class="nav-links">
+                    <a href="/">首页</a>
+                    <a href="/ai-tools/">AI 工具</a>
+                    <a href="/cloud-search/">网盘搜索</a>
+                    <a href="/ecommerce/">跨境电商</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="page-title">
+            <h1>🌐 跨境电商</h1>
+            <p>开拓全球市场，掘金海外</p>
+        </div>
+
+        <div class="platforms">
+            <!-- Shopify -->
+            <div class="platform-card">
+                <h3>Shopify</h3>
+                <p>全球领先的电商建站平台，无需技术基础，快速搭建独立站</p>
+                <div class="features">
+                    <span>独立站</span>
+                    <span>模板丰富</span>
+                    <span>支付集成</span>
+                </div>
+                <a href="https://www.shopify.com" target="_blank">访问 Shopify →</a>
+            </div>
+
+            <!-- Amazon -->
+            <div class="platform-card">
+                <h3>Amazon</h3>
+                <p>全球最大电商平台，流量巨大，适合品牌出海</p>
+                <div class="features">
+                    <span>流量大</span>
+                    <span>FBA 物流</span>
+                    <span>品牌保护</span>
+                </div>
+                <a href="https://www.amazon.com" target="_blank">访问 Amazon →</a>
+            </div>
+
+            <!-- eBay -->
+            <div class="platform-card">
+                <h3>eBay</h3>
+                <p>老牌跨境电商平台，适合二手和特色商品</p>
+                <div class="features">
+                    <span>拍卖模式</span>
+                    <span>全球覆盖</span>
+                    <span>门槛低</span>
+                </div>
+                <a href="https://www.ebay.com" target="_blank">访问 eBay →</a>
+            </div>
+
+            <!-- AliExpress -->
+            <div class="platform-card">
+                <h3>AliExpress</h3>
+                <p>阿里巴巴旗下跨境电商平台，适合小额批发</p>
+                <div class="features">
+                    <span>一件代发</span>
+                    <span>价格优势</span>
+                    <span>全球物流</span>
+                </div>
+                <a href="https://www.aliexpress.com" target="_blank">访问 AliExpress →</a>
+            </div>
+
+            <!-- TikTok Shop -->
+            <div class="platform-card">
+                <h3>TikTok Shop</h3>
+                <p>短视频电商新模式，流量红利期</p>
+                <div class="features">
+                    <span>短视频</span>
+                    <span>直播带货</span>
+                    <span>流量大</span>
+                </div>
+                <a href="https://www.tiktok.com" target="_blank">访问 TikTok →</a>
+            </div>
+
+            <!-- WooCommerce -->
+            <div class="platform-card">
+                <h3>WooCommerce</h3>
+                <p>WordPress 电商插件，自由度高，适合定制</p>
+                <div class="features">
+                    <span>开源免费</span>
+                    <span>高度定制</span>
+                    <span>WordPress</span>
+                </div>
+                <a href="https://woocommerce.com" target="_blank">访问 WooCommerce →</a>
+            </div>
+        </div>
+
+        <div class="guide">
+            <h2>📚 跨境电商入门指南</h2>
+            <ol>
+                <li><strong>选择平台：</strong>根据产品和目标市场选择合适的平台（Shopify/Amazon/eBay 等）</li>
+                <li><strong>市场调研：</strong>分析目标市场需求、竞争对手、定价策略</li>
+                <li><strong>选品策略：</strong>选择有竞争力、利润空间大的产品</li>
+                <li><strong>供应链管理：</strong>寻找可靠供应商，确保产品质量和供货稳定</li>
+                <li><strong>店铺装修：</strong>设计专业的店铺页面，提升转化率</li>
+                <li><strong>营销推广：</strong>利用社交媒体、SEO、广告等方式引流</li>
+                <li><strong>物流配送：</strong>选择合适的物流方式，确保及时送达</li>
+                <li><strong>客户服务：</strong>提供优质的售后服务，积累好评</li>
+            </ol>
+        </div>
+
+        <div class="tools">
+            <div class="tool-card">
+                <h4>Google Trends</h4>
+                <p>分析产品趋势和市场需求</p>
+            </div>
+            <div class="tool-card">
+                <h4>Jungle Scout</h4>
+                <p>Amazon 选品和数据分析工具</p>
+            </div>
+            <div class="tool-card">
+                <h4>Helium 10</h4>
+                <p>Amazon 卖家全套工具</p>
+            </div>
+            <div class="tool-card">
+                <h4>Canva</h4>
+                <p>在线设计工具，制作产品图片</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 AI 导航站。All rights reserved.</p>
+    </footer>
+</body>
+</html>

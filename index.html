@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 导航站 - AI 工具 | 网盘搜索 | 跨境电商</title>
+    <meta name="description" content="一站式 AI 导航站，收录最新 AI 工具、网盘搜索资源、跨境电商平台，助力你的数字化生活">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* 导航栏 */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        .nav-links a {
+            margin-left: 30px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #667eea;
+        }
+        
+        /* 主横幅 */
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+            color: white;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+        
+        .search-box {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            background: white;
+            border-radius: 50px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .search-box input {
+            flex: 1;
+            padding: 20px 30px;
+            border: none;
+            font-size: 16px;
+            outline: none;
+        }
+        
+        .search-box button {
+            padding: 20px 40px;
+            background: #667eea;
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .search-box button:hover {
+            background: #764ba2;
+        }
+        
+        /* 分类卡片 */
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .category-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            text-decoration: none;
+            color: #333;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .category-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+        
+        .category-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+        
+        .category-card p {
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        /* 热门推荐 */
+        .featured {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .featured h2 {
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: #667eea;
+        }
+        
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .featured-item {
+            padding: 20px;
+            border: 2px solid #f0f0f0;
+            border-radius: 10px;
+            transition: border-color 0.3s;
+        }
+        
+        .featured-item:hover {
+            border-color: #667eea;
+        }
+        
+        .featured-item h4 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        
+        .featured-item p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        /* 页脚 */
+        footer {
+            background: rgba(0,0,0,0.2);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 50px;
+        }
+        
+        footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="/" class="logo">🚀 AI 导航站</a>
+                <div class="nav-links">
+                    <a href="#ai-tools">AI 工具</a>
+                    <a href="#cloud-search">网盘搜索</a>
+                    <a href="#ecommerce">跨境电商</a>
+                    <a href="#about">关于</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主横幅 -->
+    <section class="hero">
+        <div class="container">
+            <h1>发现最好的 AI 工具和资源</h1>
+            <p>一站式导航平台，收录最新 AI 工具、网盘资源、跨境电商平台</p>
+            
+            <!-- 搜索框 -->
+            <div class="search-box">
+                <input type="text" placeholder="搜索 AI 工具、网盘资源、电商平台...">
+                <button>搜索</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 分类卡片 -->
+    <div class="container">
+        <div class="categories">
+            <!-- AI 工具 -->
+            <a href="ai-tools/" class="category-card">
+                <div class="category-icon">🤖</div>
+                <h3>AI 工具</h3>
+                <p>收录 100+ AI 工具，包括写作、图片、视频、代码等类别，提升你的工作效率</p>
+            </a>
+            
+            <!-- 网盘搜索 -->
+            <a href="cloud-search/" class="category-card">
+                <div class="category-icon">☁️</div>
+                <h3>网盘搜索</h3>
+                <p>百度网盘、阿里云盘等搜索工具，快速找到你需要的资源</p>
+            </a>
+            
+            <!-- 跨境电商 -->
+            <a href="ecommerce/" class="category-card">
+                <div class="category-icon">🌐</div>
+                <h3>跨境电商</h3>
+                <p>跨境电商平台、工具、教程，助你开拓全球市场</p>
+            </a>
+        </div>
+
+        <!-- 热门推荐 -->
+        <section class="featured">
+            <h2>🔥 热门推荐</h2>
+            <div class="featured-grid">
+                <div class="featured-item">
+                    <h4>OpenClaw</h4>
+                    <p>开源 AI 自动化框架，零门槛使用 AI 技能</p>
+                </div>
+                <div class="featured-item">
+                    <h4>ChatGPT</h4>
+                    <p>最强 AI 对话助手，工作学习必备</p>
+                </div>
+                <div class="featured-item">
+                    <h4>Midjourney</h4>
+                    <p>AI 绘画神器，创意无限</p>
+                </div>
+                <div class="featured-item">
+                    <h4>百度网盘</h4>
+                    <p>国内最大网盘，资源丰富</p>
+                </div>
+                <div class="featured-item">
+                    <h4>Shopify</h4>
+                    <p>跨境电商建站首选</p>
+                </div>
+                <div class="featured-item">
+                    <h4>阿里云盘</h4>
+                    <p>不限速网盘，体验优秀</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 AI 导航站。All rights reserved.</p>
+            <p style="margin-top: 10px;">
+                <a href="#">关于我们</a> |
+                <a href="#">联系方式</a> |
+                <a href="#">提交收录</a> |
+                <a href="#">隐私政策</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网盘搜索 - AI 导航站</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            min-height: 100vh;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        
+        header {
+            background: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 24px; font-weight: bold; color: #11998e; text-decoration: none; }
+        .nav-links a { margin-left: 30px; text-decoration: none; color: #333; }
+        
+        .page-title {
+            text-align: center;
+            padding: 60px 20px;
+            color: white;
+            margin-bottom: 30px;
+        }
+        .page-title h1 { font-size: 42px; margin-bottom: 15px; }
+        .page-title p { font-size: 20px; opacity: 0.9; }
+        
+        .search-engines {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .engine-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .engine-card h3 {
+            color: #11998e;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        .engine-card p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .engine-card a {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #11998e;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+        }
+        .engine-card a:hover { background: #38ef7d; }
+        
+        .search-tips {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .search-tips h2 {
+            color: #11998e;
+            margin-bottom: 20px;
+        }
+        .search-tips ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .search-tips li {
+            padding: 10px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #666;
+        }
+        .search-tips li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #11998e;
+            font-weight: bold;
+        }
+        
+        footer {
+            background: rgba(0,0,0,0.2);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="/" class="logo">☁️ AI 导航站</a>
+                <div class="nav-links">
+                    <a href="/">首页</a>
+                    <a href="/ai-tools/">AI 工具</a>
+                    <a href="/cloud-search/">网盘搜索</a>
+                    <a href="/ecommerce/">跨境电商</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="page-title">
+            <h1>☁️ 网盘搜索</h1>
+            <p>快速找到你需要的网盘资源</p>
+        </div>
+
+        <div class="search-engines">
+            <!-- 百度网盘 -->
+            <div class="engine-card">
+                <h3>百度网盘</h3>
+                <p>国内最大网盘，资源丰富，支持搜索、下载、在线预览</p>
+                <a href="https://pan.baidu.com" target="_blank">访问百度网盘 →</a>
+            </div>
+
+            <!-- 阿里云盘 -->
+            <div class="engine-card">
+                <h3>阿里云盘</h3>
+                <p>不限速网盘，体验优秀，支持高清视频在线播放</p>
+                <a href="https://www.aliyundrive.com" target="_blank">访问阿里云盘 →</a>
+            </div>
+
+            <!-- 天翼云盘 -->
+            <div class="engine-card">
+                <h3>天翼云盘</h3>
+                <p>中国电信出品，稳定可靠，家庭共享功能强大</p>
+                <a href="https://cloud.189.cn" target="_blank">访问天翼云盘 →</a>
+            </div>
+
+            <!-- 百度网盘搜索 -->
+            <div class="engine-card">
+                <h3>百度网盘搜索</h3>
+                <p>专业百度网盘搜索引擎，资源海量，更新及时</p>
+                <a href="https://www.pansearch.me" target="_blank">访问搜索 →</a>
+            </div>
+
+            <!-- 盘搜搜 -->
+            <div class="engine-card">
+                <h3>盘搜搜</h3>
+                <p>网盘资源搜索引擎，支持百度网盘、阿里云盘等</p>
+                <a href="https://www.pansoso.com" target="_blank">访问搜索 →</a>
+            </div>
+
+            <!-- 奈斯搜索 -->
+            <div class="engine-card">
+                <h3>奈斯搜索</h3>
+                <p>综合资源搜索平台，网盘、文档、教程一网打尽</p>
+                <a href="https://www.niceso.fun" target="_blank">访问搜索 →</a>
+            </div>
+        </div>
+
+        <div class="search-tips">
+            <h2>💡 搜索技巧</h2>
+            <ul>
+                <li>使用关键词组合搜索，如"教程 + PDF"</li>
+                <li>添加文件大小限制，如"100MB"、"1GB"</li>
+                <li>使用 filetype 限定文件类型，如"filetype:pdf"</li>
+                <li>多个关键词用空格分隔，提高搜索精度</li>
+                <li>使用引号搜索完整短语，如"Python 入门教程"</li>
+                <li>注意资源时效性，优先选择近期更新的资源</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 AI 导航站。All rights reserved.</p>
+    </footer>
+</body>
+</html>
