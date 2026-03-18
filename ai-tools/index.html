@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 工具导航 - AI 导航站</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        
+        header {
+            background: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 24px; font-weight: bold; color: #667eea; text-decoration: none; }
+        .nav-links a { margin-left: 30px; text-decoration: none; color: #333; }
+        .nav-links a:hover { color: #667eea; }
+        
+        .page-title {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 20px;
+            margin-bottom: 30px;
+        }
+        .page-title h1 { font-size: 36px; margin-bottom: 10px; }
+        .page-title p { font-size: 18px; opacity: 0.9; }
+        
+        .category-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .tab {
+            padding: 12px 24px;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 25px;
+            text-decoration: none;
+            color: #667eea;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        .tab:hover, .tab.active {
+            background: #667eea;
+            color: white;
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .tool-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .tool-card:hover { transform: translateY(-5px); }
+        .tool-card h3 { color: #667eea; margin-bottom: 10px; }
+        .tool-card p { color: #666; margin-bottom: 15px; line-height: 1.6; }
+        .tool-card .tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px; }
+        .tag {
+            padding: 4px 12px;
+            background: #f0f0f0;
+            border-radius: 12px;
+            font-size: 12px;
+            color: #666;
+        }
+        .tool-card a {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        .tool-card a:hover { background: #764ba2; }
+        
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="/" class="logo">🚀 AI 导航站</a>
+                <div class="nav-links">
+                    <a href="/">首页</a>
+                    <a href="/ai-tools/">AI 工具</a>
+                    <a href="/cloud-search/">网盘搜索</a>
+                    <a href="/ecommerce/">跨境电商</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="page-title">
+            <h1>🤖 AI 工具导航</h1>
+            <p>精选 100+ AI 工具，提升你的工作效率</p>
+        </div>
+
+        <div class="category-tabs">
+            <a href="#" class="tab active">全部</a>
+            <a href="#writing" class="tab">✍️ 写作</a>
+            <a href="#image" class="tab">🎨 图片</a>
+            <a href="#video" class="tab">🎬 视频</a>
+            <a href="#code" class="tab">💻 代码</a>
+            <a href="#voice" class="tab">🎤 语音</a>
+            <a href="#productivity" class="tab">📊 效率</a>
+        </div>
+
+        <div class="tools-grid">
+            <!-- OpenClaw -->
+            <div class="tool-card">
+                <h3>OpenClaw</h3>
+                <p>开源 AI 自动化框架，零门槛使用 AI 技能，支持微博自动发布、热点追踪等功能</p>
+                <div class="tags">
+                    <span class="tag">自动化</span>
+                    <span class="tag">开源</span>
+                    <span class="tag">免费</span>
+                </div>
+                <a href="https://github.com/openclaw/openclaw" target="_blank">访问官网 →</a>
+            </div>
+
+            <!-- ChatGPT -->
+            <div class="tool-card">
+                <h3>ChatGPT</h3>
+                <p>最强 AI 对话助手，写作、编程、学习全能，工作效率提升神器</p>
+                <div class="tags">
+                    <span class="tag">对话</span>
+                    <span class="tag">写作</span>
+                    <span class="tag">编程</span>
+                </div>
+                <a href="https://chat.openai.com" target="_blank">访问官网 →</a>
+            </div>
+
+            <!-- Midjourney -->
+            <div class="tool-card">
+                <h3>Midjourney</h3>
+                <p>AI 绘画神器，输入文字即可生成精美图片，创意无限</p>
+                <div class="tags">
+                    <span class="tag">绘画</span>
+                    <span class="tag">设计</span>
+                    <span class="tag">创意</span>
+                </div>
+                <a href="https://midjourney.com" target="_blank">访问官网 →</a>
+            </div>
+
+            <!-- Notion AI -->
+            <div class="tool-card">
+                <h3>Notion AI</h3>
+                <p>智能笔记助手，自动总结、写作、翻译，知识管理更高效</p>
+                <div class="tags">
+                    <span class="tag">笔记</span>
+                    <span class="tag">写作</span>
+                    <span class="tag">效率</span>
+                </div>
+                <a href="https://notion.so" target="_blank">访问官网 →</a>
+            </div>
+
+            <!-- GitHub Copilot -->
+            <div class="tool-card">
+                <h3>GitHub Copilot</h3>
+                <p>AI 编程助手，自动补全代码，提升开发效率</p>
+                <div class="tags">
+                    <span class="tag">编程</span>
+                    <span class="tag">开发</span>
+                    <span class="tag">效率</span>
+                </div>
+                <a href="https://github.com/features/copilot" target="_blank">访问官网 →</a>
+            </div>
+
+            <!-- Runway -->
+            <div class="tool-card">
+                <h3>Runway</h3>
+                <p>AI 视频生成和编辑工具，文字生成视频，创意无限</p>
+                <div class="tags">
+                    <span class="tag">视频</span>
+                    <span class="tag">生成</span>
+                    <span class="tag">编辑</span>
+                </div>
+                <a href="https://runwayml.com" target="_blank">访问官网 →</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 AI 导航站。All rights reserved.</p>
+    </footer>
+</body>
+</html>
