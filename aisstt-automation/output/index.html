@@ -1882,42 +1882,6 @@ function submit(){
   const n=document.getElementById('fn').value.trim();
   const u=document.getElementById('fu').value.trim();
   if(!n||!u){toast('⚠️ 请填写名称和网址');return;}
-  
-  // 提交到待审核队列而不是直接添加到主列表
-  fetch('/api/submit-tool', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      id: Date.now(),
-      n: n,
-      e: '🔧',
-      c: document.getElementById('fc').value,
-      tg: [document.getElementById('fc').value],
-      d: document.getElementById('fd').value.trim() || '用户提交的 AI 工具。',
-      u: u.startsWith('http') ? u : 'https://' + u,
-      p: document.getElementById('fp').value,
-      r: 4.0,
-      rn: 1,
-      f: false, // 默认不推荐，等待审核
-      h: false,
-      nw: true,
-      submittedAt: Date.now()
-    })
-  })
-  .then(response => {
-    if (response.ok) {
-      ['fn','fu','fd'].forEach(id=>document.getElementById(id).value='');
-      closeModal();
-      toast('🎉 工具提交成功！等待管理员审核...');
-    } else {
-      throw new Error('提交失败');
-    }
-  })
-  .catch(error => {
-    console.error('提交失败:', error);
-    toast('❌ 提交失败，请稍后重试');
-  });
-}
   T.unshift({id:Date.now(),n,e:'🔧',c:document.getElementById('fc').value,
     tg:[document.getElementById('fc').value],
     d:document.getElementById('fd').value.trim()||'用户提交的 AI 工具。',
