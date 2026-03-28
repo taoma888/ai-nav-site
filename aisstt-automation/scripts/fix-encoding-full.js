@@ -1,0 +1,54 @@
+const fs = require('fs');
+
+// 修复文件编码和T数组格式
+const htmlPath = 'C:\\Users\\28775\\.openclaw\\workspace\\aisstt-automation\\output\\index.html';
+let htmlContent = fs.readFileSync(htmlPath, 'utf8');
+
+// 确保HTML有正确的charset
+if (!htmlContent.includes('<meta charset="UTF-8">')) {
+  htmlContent = htmlContent.replace(
+    '<head>',
+    '<head>\n<meta charset="UTF-8">'
+  );
+}
+
+// 修复T数组 - 使用正确的中文字符
+const correctTArray = `const T=[
+ {id:1, n:'ChatGPT', e:'🤖',c:'agent', tg:['AI写作','智能体'], d:'对话式 AI 写作与办公助手：大纲、改写、润色、脚本与总结。', u:'https://chat.openai.com', p:'freemium',r:4.0,rn:100,f:true,h:true, nw:false},
+ {id:2, n:'Dify', e:'🔧',c:'agent', tg:['AI智能体平台'], d:'开源 AI 应用/智能体平台：工作流、RAG、工具调用与多模型编排。', u:'https://dify.ai', p:'free', r:4.0,rn:100,f:true,h:true, nw:false},
+ {id:3, n:'扣子 Coze', e:'🎯',c:'agent', tg:['智能体平台'], d:'国内智能体平台：搭建 Bot/工作流，支持工具调用与多场景发布。', u:'https://www.coze.cn', p:'free', r:4.0,rn:100,f:true,h:true, nw:false},
+ {id:4, n:'DeepSeek', e:'🐋',c:'agent', tg:['AI对话','中文'], d:'国内顶级大模型，推理能力强劲，API 价格极具竞争力。', u:'https://chat.deepseek.com', p:'free', r:4.5,rn:300,f:true,h:true, nw:true},
+ {id:5, n:'豆包', e:'🫘',c:'agent', tg:['AI对话','中文'], d:'字节跳动出品 AI 助手，日常问答、创作与办公全能。', u:'https://www.doubao.com', p:'free', r:4.0,rn:250,f:true,h:true, nw:false},
+ {id:6, n:'Kimi', e:'🌙',c:'agent', tg:['AI对话','长文本'], d:'月之暗面推出，长文本处理能力突出，中文理解优秀。', u:'https://kimi.moonshot.cn', p:'free', r:4.0,rn:200,f:true,h:true, nw:false},
+ {id:7, n:'Claude', e:'🧠',c:'agent', tg:['AI对话','Anthropic'], d:'Anthropic 研发，安全性强，200K 超长上下文，理解深度极佳。', u:'https://claude.ai', p:'freemium',r:4.5,rn:150,f:true,h:true, nw:false},
+ {id:8, n:'Midjourney', e:'🎨',c:'image', tg:['AI图片'], d:'AI 绘画顶级工具，艺术风格多样，美感极强，Discord 内使用。', u:'https://midjourney.com', p:'paid', r:4.5,rn:200,f:true,h:true, nw:false},
+ {id:9, n:'Stable Diffusion',e:'🌈',c:'image',tg:['AI图片','开源'], d:'最受欢迎开源绘图模型，可本地部署，工具链丰富。', u:'https://stability.ai', p:'free', r:4.0,rn:180,f:true,h:true, nw:false},
+ {id:10,n:'DALL·E 3', e:'🖼️',c:'image', tg:['AI图片','OpenAI'], d:'集成于 ChatGPT，自然语言描述即可生成高质量图像。', u:'https://openai.com/dall-e-3', p:'freemium',r:4.0,rn:100,f:false,h:false,nw:false},
+ {id:11,n:'Luma AI', e:'🌟',c:'image', tg:['AI图片','3D'], d:'Dream Machine 前沿 3D 场景与视频生成，效果惊艳。', u:'https://lumalabs.ai', p:'freemium',r:4.5,rn:90, f:true,h:true, nw:true},
+ {id:12,n:'Runway', e:'🎬',c:'video', tg:['AI视频'], d:'专业 AI 视频生成与编辑，Gen-3 文生视频和视频续写。', u:'https://runwayml.com', p:'freemium',r:4.0,rn:100,f:true,h:true, nw:true},
+ {id:13,n:'Sora', e:'🎥',c:'video', tg:['AI视频','OpenAI'], d:'OpenAI 文生视频，生成高质量长达 1 分钟连贯视频。', u:'https://sora.com', p:'paid', r:4.5,rn:80, f:true,h:true, nw:true},
+ {id:14,n:'GitHub Copilot',e:'💻',c:'code', tg:['AI编程','IDE'], d:'微软 AI 编程助手，VS Code 深度集成，实时补全代码。', u:'https://github.com/features/copilot',p:'paid', r:4.5,rn:200,f:true,h:true, nw:false},
+ {id:15,n:'Cursor', e:'⌨️',c:'code', tg:['AI编程','IDE'], d:'专为 AI 优化的代码编辑器，对话式编程，理解整个代码库。', u:'https://cursor.sh', p:'freemium',r:4.5,rn:150,f:true,h:true, nw:true},
+ {id:16,n:'ElevenLabs', e:'🎵',c:'audio', tg:['AI音频','TTS'], d:'业界最真实 AI 语音合成，支持声音克隆和多语言生成。', u:'https://elevenlabs.io', p:'freemium',r:4.5,rn:120,f:true,h:true, nw:false},
+ {id:17,n:'Suno', e:'🎼',c:'audio', tg:['AI音乐'], d:'文字生成完整音乐，一句话创作带歌词高质量歌曲。', u:'https://suno.ai', p:'freemium',r:4.5,rn:100,f:true,h:true, nw:true},
+ {id:18,n:'Notion AI', e:'📝',c:'office', tg:['AI写作','办公'], d:'集成于 Notion 的 AI 助手，支持生成、摘要和翻译。', u:'https://notion.so/product/ai', p:'paid', r:4.0,rn:180,f:true,h:false,nw:false},
+ {id:19,n:'Gamma', e:'🚀',c:'office', tg:['AI PPT','办公'], d:'AI 自动生成演示文稿，输入主题一键输出精美幻灯片。', u:'https://gamma.app', p:'freemium',r:4.0,rn:120,f:true,h:true, nw:false},
+ {id:20,n:'Perplexity', e:'🔍',c:'search', tg:['AI搜索'], d:'AI 驱动搜索引擎，实时搜索给出带引用的精准答案。', u:'https://perplexity.ai', p:'freemium',r:4.5,rn:150,f:true,h:true, nw:false},
+ {id:21,n:'LangChain', e:'🔗',c:'agent', tg:['AI框架','开发'], d:'最流行 LLM 应用/智能体开发框架，生态极其丰富。', u:'https://www.langchain.com', p:'free', r:4.0,rn:100,f:false,h:false,nw:false},
+ {id:22,n:'IT Tools', e:'🧰',c:'toolbox', tg:['在线工具'], d:'开发/办公工具合集：JSON、编码解码、格式化、文本处理。', u:'https://it-tools.tech', p:'free', r:4.0,rn:100,f:true,h:true, nw:false},
+ {id:23,n:'Jasper', e:'✍️',c:'writing', tg:['AI写作','营销'], d:'专业营销文案 AI，50+ 模板，适合品牌与广告创作。', u:'https://jasper.ai', p:'paid', r:4.0,rn:80, f:false,h:false,nw:false},
+ {id:24,n:'Regex101', e:'🔎',c:'toolbox', tg:['在线工具','开发'], d:'正则表达式调试与解释工具，开发者必备神器。', u:'https://regex101.com', p:'free', r:4.0,rn:100,f:false,h:false,nw:false},
+ {id:99999, n:'Test AI Tool', e:'🧪', c:'agent', tg:['AI测试','自动化'], d:'这是一个用于测试的AI工具，验证端到端工作流是否正常。', u:'https://test-ai-tool.example.com', p:'free', r:4.5, rn:10, f:true, h:false, nw:true}
+];`;
+
+// 替换T数组
+const tArrayStart = htmlContent.indexOf('const T=[');
+if (tArrayStart !== -1) {
+  const tArrayEnd = htmlContent.indexOf('];', tArrayStart) + 2;
+  htmlContent = htmlContent.substring(0, tArrayStart) + correctTArray + htmlContent.substring(tArrayEnd);
+}
+
+// 保存修复后的文件
+fs.writeFileSync(htmlPath, htmlContent, 'utf8');
+
+console.log('✅ 文件编码和T数组已修复!');

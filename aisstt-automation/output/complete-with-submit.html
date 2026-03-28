@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>真AI进化论 · 一站式智能搜索</title>
+<meta name="description" content="AI 工具导航，精选 AI 写作、图片、视频、代码、办公等优质工具，一站式发现与管理你的 AI 助手。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* 完整样式 - 包含提交模态框 */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:15px}
+body{
+  font-family:'Noto Sans SC','Outfit',sans-serif;
+  background:#050a0a;
+  color:#d4ead4;
+  min-height:100vh;
+}
+#loader{
+  position:fixed;inset:0;z-index:9999;
+  background:#050a0a;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;
+  transition:opacity .5s ease, visibility .5s;
+}
+#loader.out{opacity:0;visibility:hidden}
+.loader-ring{
+  width:52px;height:52px;
+  border:2px solid rgba(0,255,136,0.12);
+  border-top-color:#00ff88;
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+  box-shadow:0 0 20px #00ff8840,0 0 40px #00ff8820;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+#header{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  height:58px;
+  background:rgba(5,10,10,.88);
+  border-bottom:1px solid rgba(0,255,136,0.12);
+  backdrop-filter:blur(20px) saturate(1.4);
+  -webkit-backdrop-filter:blur(20px) saturate(1.4);
+  display:flex;align-items:center;
+  padding:0 20px 0 0;
+}
+.hd-logo{
+  width:168px;flex-shrink:0;
+  display:flex;align-items:center;gap:10px;
+  padding:0 18px;text-decoration:none;
+}
+.logo-hex{
+  width:34px;height:34px;
+  background:linear-gradient(135deg,#00cc6a,#006633);
+  clip-path:polygon(50% 0%,93% 25%,93% 75%,50% 100%,7% 75%,7% 25%);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;flex-shrink:0;
+  box-shadow:0 0 16px #00ff8840,0 0 40px #00ff8820;
+  animation:hexPulse 3s ease-in-out infinite;
+}
+@keyframes hexPulse{0%,100%{box-shadow:0 0 16px #00ff8840,0 0 40px #00ff8820}50%{box-shadow:0 0 24px #00ff8870,0 0 60px #00ff8835}}
+.btn-submit{
+  height:32px;padding:0 16px;
+  background:#00ff88;color:#020a06;
+  border:none;border-radius:20px;
+  font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;
+  cursor:pointer;letter-spacing:.3px;
+  display:flex;align-items:center;gap:5px;
+  box-shadow:0 0 16px #00ff8855,0 4px 12px #00ff8830;
+  transition:all .2s ease;
+}
+.btn-submit:hover{
+  background:#20ffaa;
+  box-shadow:0 0 24px #00ff8880,0 4px 20px #00ff8850;
+  transform:translateY(-1px);
+}
+#wrap{
+  display:flex;
+  padding-top:58px;
+  min-height:100vh;
+  position:relative;z-index:1;
+}
+#sidebar{
+  width:60px;
+  flex-shrink:0;
+  position:fixed;top:58px;bottom:0;left:0;
+  background:rgba(5,10,8,.92);
+  border-right:1px solid rgba(0,255,136,0.06);
+  backdrop-filter:blur(12px);
+  overflow-y:auto;overflow-x:hidden;
+  padding:14px 0 40px;
+  transition:width .22s cubic-bezier(.4,0,.2,1);
+  z-index:150;
+}
+#sidebar:hover{
+  width:182px;
+  border-right-color:rgba(0,255,136,0.12);
+  box-shadow:4px 0 24px #00000050;
+}
+#main{ margin-left:60px; }
+.sb-link{
+  display:flex;align-items:center;gap:10px;
+  padding:4px 0 4px 12px;
+  border-radius:8px;
+  color:rgba(154,191,154,0.7);font-size:12.5px;
+  text-decoration:none;cursor:pointer;
+  transition:background .2s ease, color .2s ease;
+  border:none;background:none;width:100%;text-align:left;
+  white-space:nowrap;position:relative;
+  overflow:hidden;
+}
+.sb-link:hover{
+  background:rgba(0,255,136,0.1);
+  color:#d4ead4;
+}
+.sb-link.on{
+  background:rgba(0,255,136,0.13);
+  color:#00ff88;
+  box-shadow:inset 2px 0 0 #00ff88;
+}
+.sb-ico{
+  font-size:20px;
+  width:36px;
+  height:36px;
+  text-align:center;
+  flex-shrink:0;
+  line-height:36px;
+  border-radius:10px;
+  background:rgba(10,20,16,0.7);
+  border:1px solid rgba(0,255,136,0.12);
+  box-shadow:
+    0 2px 6px rgba(0,0,0,.5),
+    0 1px 0 rgba(255,255,255,.03) inset,
+    0 0 0 0 rgba(0,255,136,.2);
+  transition:
+    transform .3s cubic-bezier(.34,1.56,.64,1),
+    box-shadow .2s ease,
+    background .2s ease,
+    border-color .2s ease;
+  display:flex;align-items:center;justify-content:center;
+}
+.sb-link:hover .sb-ico{
+  transform:translateY(-2px) scale(1.12);
+  background:rgba(14,26,20,0.8);
+  border-color:rgba(0,255,136,0.22);
+  box-shadow:
+    0 6px 16px rgba(0,0,0,.6),
+    0 1px 0 rgba(255,255,255,.05) inset,
+    0 0 12px rgba(0,255,136,.2);
+}
+.sb-link.on .sb-ico{
+  background:rgba(0,255,136,0.1);
+  border-color:rgba(0,255,136,0.22);
+  box-shadow:
+    0 4px 12px rgba(0,0,0,.5),
+    0 0 14px rgba(0,255,136,.2),
+    0 1px 0 rgba(0,255,136,.08) inset;
+}
+#main{
+  margin-left:60px;
+  flex:1;padding:24px 28px 72px;
+  min-width:0;
+}
+.hero{
+  background:rgba(10,20,16,0.7);
+  border:1px solid rgba(0,255,136,0.12);
+  border-radius:16px;
+  padding:24px 26px 20px;
+  margin-bottom:18px;
+  backdrop-filter:blur(16px);
+  position:relative;overflow:hidden;
+}
+.s-row{display:flex;gap:10px;align-items:center}
+.s-wrap input{
+  width:100%;height:46px;
+  background:rgba(0,0,0,.5);
+  border:1px solid rgba(0,255,136,0.22);
+  border-radius:40px;
+  padding:0 48px 0 20px;
+  font-size:13.5px;color:#d4ead4;
+  font-family:'Noto Sans SC',sans-serif;
+  outline:none;
+  transition:all .2s ease;
+  letter-spacing:.1px;
+}
+.s-wrap input::placeholder{color:rgba(154,191,154,0.7)}
+.s-wrap input:focus{
+  border-color:#00ff88;
+  box-shadow:0 0 0 3px #00ff8815,0 0 20px #00ff8818;
+  background:rgba(0,20,12,.6);
+}
+.btn-go{
+  height:46px;padding:0 28px;
+  background:#00ff88;color:#020a06;
+  border:none;border-radius:40px;
+  font-size:14px;font-weight:700;cursor:pointer;
+  font-family:'Outfit',sans-serif;
+  letter-spacing:.3px;
+  box-shadow:0 0 16px #00ff8850,0 4px 12px #00ff8830;
+  transition:all .2s ease;
+}
+.btn-go:hover{
+  background:#20ffaa;transform:translateY(-1px);
+  box-shadow:0 0 24px #00ff8870,0 6px 16px #00ff8840;
+}
+.chips{
+  display:flex;gap:6px;flex-wrap:wrap;
+  margin-bottom:20px;
+}
+.chip{
+  padding:5px 15px;border-radius:20px;
+  font-size:12px;cursor:pointer;
+  border:1px solid rgba(0,255,136,0.12);
+  background:rgba(10,20,16,.6);
+  color:rgba(154,191,154,0.7);
+  font-family:'Noto Sans SC',sans-serif;
+  backdrop-filter:blur(8px);
+  transition:all .2s ease;
+}
+.chip:hover{
+  border-color:rgba(0,255,136,0.22);color:#d4ead4;
+  background:rgba(0,255,136,.06);
+}
+.chip.on{
+  background:#00ff88;border-color:#00ff88;
+  color:#020a06;font-weight:700;
+  box-shadow:0 0 10px #00ff8845,0 2px 8px #00ff8830;
+}
+.card{
+  background:rgba(14,26,20,0.85);
+  border:1px solid rgba(0,255,136,0.12);
+  border-radius:12px;
+  padding:16px;
+  display:flex;flex-direction:column;gap:11px;
+  position:relative;overflow:hidden;
+  backdrop-filter:blur(12px);
+  transition:border-color .2s ease,transform .2s ease,box-shadow .2s ease;
+  animation:cardIn .3s ease both;
+}
+@keyframes cardIn{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+.c-thumb{
+  width:46px;height:46px;border-radius:11px;
+  background:rgba(10,20,16,.6);
+  border:1px solid rgba(0,255,136,0.22);
+  display:flex;align-items:center;justify-content:center;
+  font-size:23px;flex-shrink:0;
+  box-shadow:0 4px 12px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.04);
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .2s ease;
+}
+.card:hover .c-thumb{
+  transform:scale(1.06) rotate(-2deg);
+  box-shadow:0 6px 16px rgba(0,0,0,.4),0 0 12px #00ff8820;
+}
+.c-name{
+  font-family:'Outfit',sans-serif;font-size:15px;font-weight:700;
+  color:#e8f5e8;letter-spacing:-.2px;
+  overflow:hidden;text-overflow:ellipsis;
+}
+.c-desc{
+  font-size:12px;color:#9abf9a;line-height:1.6;
+  display:-webkit-box;-webkit-line-clamp:2;
+  -webkit-box-orient:vertical;overflow:hidden;
+  margin-top:5px;
+}
+.c-star{
+  background:none;border:none;cursor:pointer;
+  font-size:17px;color:rgba(42,63,42,0.7);
+  padding:2px;line-height:1;flex-shrink:0;
+  transition:all .3s cubic-bezier(.34,1.56,.64,1);
+}
+.c-star:hover{color:#ffd060;transform:scale(1.25) rotate(10deg)}
+.c-star.on{color:#ffd060;filter:drop-shadow(0 0 4px #ffd060)}
+.c-meta{display:flex;align-items:center;gap:8px}
+.c-stars{color:#ffd060;font-size:11.5px;letter-spacing:1px;text-shadow:0 0 4px #ffd060}
+.c-rating{font-family:'JetBrains Mono',monospace;font-size:11px;color:#9abf9a}
+.c-price{
+  margin-left:auto;font-family:'JetBrains Mono',monospace;
+  font-size:9.5px;padding:2px 8px;border-radius:10px;
+}
+.p-free{background:rgba(0,255,136,.1);color:#00ff88;border:1px solid rgba(0,255,136,.2)}
+.p-paid{background:rgba(255,107,107,.1);color:#ff6b6b;border:1px solid rgba(255,107,107,.2)}
+.p-freemium{background:rgba(255,208,96,.1);color:#ffd060;border:1px solid rgba(255,208,96,.2)}
+
+/* Modal Styles */
+#modal-ov{
+  position:fixed;inset:0;z-index:500;
+  background:rgba(0,0,0,.75);
+  backdrop-filter:blur(8px);
+  display:none;align-items:center;justify-content:center;padding:20px;
+}
+#modal-ov.open{display:flex}
+.modal{
+  background:rgba(10,20,16,.92);
+  border:1px solid rgba(0,255,136,0.22);
+  border-radius:16px;padding:28px;
+  width:100%;max-width:480px;
+  box-shadow:0 0 40px #000c,0 0 80px #00ff8810;
+  animation:mIn .24s cubic-bezier(.4,0,.2,1);
+  position:relative;overflow:hidden;
+}
+.modal::before{
+  content:'';position:absolute;
+  top:-1px;left:15%;right:15%;height:1px;
+  background:linear-gradient(90deg,transparent,#00ff88,transparent);
+}
+@keyframes mIn{from{opacity:0;transform:scale(.95) translateY(10px)}to{opacity:1;transform:none}}
+.m-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+.m-title{
+  font-family:'Outfit',sans-serif;font-size:18px;font-weight:700;
+  color:#e8f5e8;
+}
+.m-close{
+  width:30px;height:30px;background:rgba(14,26,20,0.8);
+  border:1px solid rgba(0,255,136,0.12);border-radius:8px;
+  cursor:pointer;color:rgba(154,191,154,0.7);font-size:15px;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s ease;
+}
+.m-close:hover{background:rgba(10,20,16,0.9);color:#d4ead4;border-color:rgba(0,255,136,0.22)}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fg{margin-bottom:14px}
+.fl{
+  display:block;font-size:10.5px;
+  font-family:'JetBrains Mono',monospace;
+  color:rgba(154,191,154,0.7);margin-bottom:6px;letter-spacing:.5px;
+}
+.fi,.fs,.fta{
+  width:100%;background:rgba(0,0,0,.5);
+  border:1px solid rgba(0,255,136,0.22);border-radius:8px;
+  padding:9px 13px;
+  font-family:'Noto Sans SC',sans-serif;font-size:13px;
+  color:#d4ead4;outline:none;
+  transition:all .2s ease;
+}
+.fi:focus,.fs:focus,.fta:focus{
+  border-color:#00ff88;
+  box-shadow:0 0 0 3px #00ff8812,0 0 16px #00ff8810;
+}
+.fi::placeholder,.fta::placeholder{color:rgba(154,191,154,0.3)}
+.fta{resize:vertical;min-height:72px}
+.fs option{background:rgba(10,20,16,.92)}
+.btn-prim{
+  width:100%;height:42px;margin-top:4px;
+  background:#00ff88;color:#020a06;
+  border:none;border-radius:8px;
+  font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;
+  cursor:pointer;letter-spacing:.3px;
+  box-shadow:0 0 16px #00ff8850,0 4px 12px #00ff8830;
+  transition:all .2s ease;
+}
+.btn-prim:hover{background:#20ffaa;box-shadow:0 0 24px #00ff8870;transform:translateY(-1px)}
+</style>
+</head>
+<body>
+
+<!-- Loader -->
+<div id="loader">
+  <div class="loader-ring"></div>
+  <div class="loader-word">LOADING</div>
+</div>
+
+<!-- Header -->
+<header id="header">
+  <a class="hd-logo" href="#" onclick="filterCat('all');return false">
+    <div class="logo-hex">🤖</div>
+    <div class="logo-texts">
+      <div class="l1">真AI进化论</div>
+    </div>
+  </a>
+  <div class="hd-right">
+    <button class="btn-submit" onclick="openModal()">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v14M5 12h14"/></svg>
+      <span id="btn-submit-txt">提交工具</span>
+    </button>
+  </div>
+</header>
+
+<!-- Layout -->
+<div id="wrap">
+  <!-- Sidebar -->
+  <nav id="sidebar">
+    <a class="sb-link on" data-nav="home" href="#" onclick="filterCat('all');return false">
+      <span class="sb-ico">🏠</span><span class="sb-txt">首页</span>
+    </a>
+    <a class="sb-link" data-cat="hot" href="#" onclick="filterCat('hot');return false">
+      <span class="sb-ico">🔥</span><span class="sb-txt">热门</span>
+    </a>
+    <a class="sb-link" data-cat="writing" href="#" onclick="filterCat('writing');return false">
+      <span class="sb-ico">✍️</span><span class="sb-txt">写作</span>
+    </a>
+    <a class="sb-link" data-cat="image" href="#" onclick="filterCat('image');return false">
+      <span class="sb-ico">🖼️</span><span class="sb-txt">图片</span>
+    </a>
+    <a class="sb-link" data-cat="video" href="#" onclick="filterCat('video');return false">
+      <span class="sb-ico">🎬</span><span class="sb-txt">视频</span>
+    </a>
+    <a class="sb-link" data-cat="audio" href="#" onclick="filterCat('audio');return false">
+      <span class="sb-ico">🎧</span><span class="sb-txt">音频</span>
+    </a>
+    <a class="sb-link" data-cat="code" href="#" onclick="filterCat('code');return false">
+      <span class="sb-ico">💻</span><span class="sb-txt">编程</span>
+    </a>
+    <a class="sb-link" data-cat="office" href="#" onclick="filterCat('office');return false">
+      <span class="sb-ico">📊</span><span class="sb-txt">办公</span>
+    </a>
+    <a class="sb-link" data-cat="agent" href="#" onclick="filterCat('agent');return false">
+      <span class="sb-ico">🤖</span><span class="sb-txt">智能体</span>
+    </a>
+    <a class="sb-link" data-cat="toolbox" href="#" onclick="filterCat('toolbox');return false">
+      <span class="sb-ico">🧰</span><span class="sb-txt">工具箱</span>
+    </a>
+  </nav>
+
+  <!-- Main -->
+  <main id="main">
+    <div class="hero">
+      <div class="s-row">
+        <div class="s-wrap">
+          <input id="si" type="search" placeholder="搜索AI工具...">
+        </div>
+        <button class="btn-go" onclick="doSearch()">搜索</button>
+      </div>
+    </div>
+
+    <div class="chips" id="chips">
+      <button class="chip on" onclick="filterCat('all')">全部</button>
+      <button class="chip" onclick="filterCat('hot')">🔥 热门</button>
+      <button class="chip" onclick="filterCat('writing')">写作</button>
+      <button class="chip" onclick="filterCat('image')">图片</button>
+      <button class="chip" onclick="filterCat('video')">视频</button>
+      <button class="chip" onclick="filterCat('audio')">音频</button>
+      <button class="chip" onclick="filterCat('code')">开发</button>
+      <button class="chip" onclick="filterCat('office')">办公</button>
+      <button class="chip" onclick="filterCat('agent')">智能体</button>
+      <button class="chip" onclick="filterCat('toolbox')">工具箱</button>
+    </div>
+
+    <div id="grid"></div>
+  </main>
+</div>
+
+<!-- Modal -->
+<div id="modal-ov" onclick="ovClick(event)">
+  <div class="modal">
+    <div class="m-hd">
+      <span class="m-title">提交新工具</span>
+      <button class="m-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="f2">
+      <div class="fg"><label class="fl">工具名称 *</label><input class="fi" id="fn" placeholder="例：ChatGPT"></div>
+      <div class="fg"><label class="fl">网址 *</label><input class="fi" id="fu" placeholder="https://..."></div>
+    </div>
+    <div class="f2">
+      <div class="fg">
+        <label class="fl">分类</label>
+        <select class="fs" id="fc">
+          <option value="agent">智能体</option><option value="writing">写作</option>
+          <option value="image">图片</option><option value="video">视频</option>
+          <option value="audio">音频</option><option value="code">编程</option>
+          <option value="office">办公</option><option value="academic">学术</option>
+          <option value="design">设计</option><option value="search">搜索</option>
+          <option value="toolbox">工具箱</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label class="fl">定价</label>
+        <select class="fs" id="fp">
+          <option value="free">免费</option>
+          <option value="freemium">免费+</option>
+          <option value="paid">付费</option>
+        </select>
+      </div>
+    </div>
+    <div class="fg"><label class="fl">工具简介</label><textarea class="fta" id="fd" placeholder="用一两句话描述核心功能…"></textarea></div>
+    <button class="btn-prim" onclick="submit()">提交工具 →</button>
+  </div>
+</div>
+
+<script>
+// 完整数据 - 25个工具
+const T=[
+ {id:1, n:'ChatGPT', e:'🤖',c:'agent', tg:['AI写作','智能体'], d:'对话式 AI 写作与办公助手：大纲、改写、润色、脚本与总结。', u:'https://chat.openai.com', p:'freemium',r:4.0,rn:100,f:true,h:true, nw:false},
+ {id:2, n:'Dify', e:'🔧',c:'agent', tg:['AI智能体平台'], d:'开源 AI 应用/智能体平台：工作流、RAG、工具调用与多模型编排。', u:'https://dify.ai', p:'free', r:4.0,rn:100,f:true,h:true, nw:false},
+ {id:3, n:'扣子 Coze', e:'🎯',c:'agent', tg:['智能体平台'], d:'国内智能体平台：搭建 Bot/工作流，支持工具调用与多场景发布。', u:'https://www.coze.cn', p:'free', r:4.0,rn:100,f:true,h:true, nw:false},
+ {id:4, n:'DeepSeek', e:'🐋',c:'agent', tg:['AI对话','中文'], d:'国内顶级大模型，推理能力强劲，API 价格极具竞争力。', u:'https://chat.deepseek.com', p:'free', r:4.5,rn:300,f:true,h:true, nw:true},
+ {id:5, n:'豆包', e:'🫘',c:'agent', tg:['AI对话','中文'], d:'字节跳动出品 AI 助手，日常问答、创作与办公全能。', u:'https://www.doubao.com', p:'free', r:4.0,rn:250,f:true,h:true, nw:false},
+ {id:6, n:'Kimi', e:'🌙',c:'agent', tg:['AI对话','长文本'], d:'月之暗面推出，长文本处理能力突出，中文理解优秀。', u:'https://kimi.moonshot.cn', p:'free', r:4.0,rn:200,f:true,h:true, nw:false},
+ {id:7, n:'Claude', e:'🧠',c:'agent', tg:['AI对话','Anthropic'], d:'Anthropic 研发，安全性强，200K 超长上下文，理解深度极佳。', u:'https://claude.ai', p:'freemium',r:4.5,rn:150,f:true,h:true, nw:false},
+ {id:8, n:'Midjourney', e:'🎨',c:'image', tg:['AI图片'], d:'AI 绘画顶级工具，艺术风格多样，美感极强，Discord 内使用。', u:'https://midjourney.com', p:'paid', r:4.5,rn:200,f:true,h:true, nw:false},
+ {id:9, n:'Stable Diffusion',e:'🌈',c:'image',tg:['AI图片','开源'], d:'最受欢迎开源绘图模型，可本地部署，工具链丰富。', u:'https://stability.ai', p:'free', r:4.0,rn:180,f:true,h:true, nw:false},
+ {id:10,n:'DALL·E 3', e:'🖼️',c:'image', tg:['AI图片','OpenAI'], d:'集成于 ChatGPT，自然语言描述即可生成高质量图像。', u:'https://openai.com/dall-e-3', p:'freemium',r:4.0,rn:100,f:false,h:false,nw:false},
+ {id:11,n:'Luma AI', e:'🌟',c:'image', tg:['AI图片','3D'], d:'Dream Machine 前沿 3D 场景与视频生成，效果惊艳。', u:'https://lumalabs.ai', p:'freemium',r:4.5,rn:90, f:true,h:true, nw:true},
+ {id:12,n:'Runway', e:'🎬',c:'video', tg:['AI视频'], d:'专业 AI 视频生成与编辑，Gen-3 文生视频和视频续写。', u:'https://runwayml.com', p:'freemium',r:4.0,rn:100,f:true,h:true, nw:true},
+ {id:13,n:'Sora', e:'🎥',c:'video', tg:['AI视频','OpenAI'], d:'OpenAI 文生视频，生成高质量长达 1 分钟连贯视频。', u:'https://sora.com', p:'paid', r:4.5,rn:80, f:true,h:true, nw:true},
+ {id:14,n:'GitHub Copilot',e:'💻',c:'code', tg:['AI编程','IDE'], d:'微软 AI 编程助手，VS Code 深度集成，实时补全代码。', u:'https://github.com/features/copilot',p:'paid', r:4.5,rn:200,f:true,h:true, nw:false},
+ {id:15,n:'Cursor', e:'⌨️',c:'code', tg:['AI编程','IDE'], d:'专为 AI 优化的代码编辑器，对话式编程，理解整个代码库。', u:'https://cursor.sh', p:'freemium',r:4.5,rn:150,f:true,h:true, nw:true},
+ {id:16,n:'ElevenLabs', e:'🎵',c:'audio', tg:['AI音频','TTS'], d:'业界最真实 AI 语音合成，支持声音克隆和多语言生成。', u:'https://elevenlabs.io', p:'freemium',r:4.5,rn:120,f:true,h:true, nw:false},
+ {id:17,n:'Suno', e:'🎼',c:'audio', tg:['AI音乐'], d:'文字生成完整音乐，一句话创作带歌词高质量歌曲。', u:'https://suno.ai', p:'freemium',r:4.5,rn:100,f:true,h:true, nw:true},
+ {id:18,n:'Notion AI', e:'📝',c:'office', tg:['AI写作','办公'], d:'集成于 Notion 的 AI 助手，支持生成、摘要和翻译。', u:'https://notion.so/product/ai', p:'paid', r:4.0,rn:180,f:true,h:false,nw:false},
+ {id:19,n:'Gamma', e:'🚀',c:'office', tg:['AI PPT','办公'], d:'AI 自动生成演示文稿，输入主题一键输出精美幻灯片。', u:'https://gamma.app', p:'freemium',r:4.0,rn:120,f:true,h:true, nw:false},
+ {id:20,n:'Perplexity', e:'🔍',c:'search', tg:['AI搜索'], d:'AI 驱动搜索引擎，实时搜索给出带引用的精准答案。', u:'https://perplexity.ai', p:'freemium',r:4.5,rn:150,f:true,h:true, nw:false},
+ {id:21,n:'LangChain', e:'🔗',c:'agent', tg:['AI框架','开发'], d:'最流行 LLM 应用/智能体开发框架，生态极其丰富。', u:'https://www.langchain.com', p:'free', r:4.0,rn:100,f:false,h:false,nw:false},
+ {id:22,n:'IT Tools', e:'🧰',c:'toolbox', tg:['在线工具'], d:'开发/办公工具合集：JSON、编码解码、格式化、文本处理。', u:'https://it-tools.tech', p:'free', r:4.0,rn:100,f:true,h:true, nw:false},
+ {id:23,n:'Jasper', e:'✍️',c:'writing', tg:['AI写作','营销'], d:'专业营销文案 AI，50+ 模板，适合品牌与广告创作。', u:'https://jasper.ai', p:'paid', r:4.0,rn:80, f:false,h:false,nw:false},
+ {id:24,n:'Regex101', e:'🔎',c:'toolbox', tg:['在线工具','开发'], d:'正则表达式调试与解释工具，开发者必备神器。', u:'https://regex101.com', p:'free', r:4.0,rn:100,f:false,h:false,nw:false},
+ {id:99999, n:'Test AI Tool', e:'🧪', c:'agent', tg:['AI测试','自动化'], d:'这是一个用于测试的AI工具，验证端到端工作流是否正常。', u:'https://test-ai-tool.example.com', p:'free', r:4.5, rn:10, f:true, h:false, nw:true}
+];
+
+let starred = new Set();
+let currentCategory = 'all';
+
+function getList() {
+  let l = [...T];
+  
+  if (currentCategory === 'hot') {
+    l = l.filter(t => t.h);
+  } else if (currentCategory !== 'all') {
+    l = l.filter(t => t.c === currentCategory);
+  }
+  
+  return l;
+}
+
+function card(t, i) {
+  const on = starred.has(t.id);
+  const st = '★'.repeat(Math.round(t.r)) + '☆'.repeat(5 - Math.round(t.r));
+  const pc = { free: 'p-free', paid: 'p-paid', freemium: 'p-freemium' }[t.p];
+  
+  return `<div class="card">
+    <div class="c-thumb">${t.e}</div>
+    <div class="c-name">${t.n}</div>
+    <div class="c-desc">${t.d}</div>
+    <div class="c-meta">
+      <span class="c-stars">${st}</span>
+      <span class="c-rating">${t.r.toFixed(1)} (${t.rn}+)</span>
+      <span class="c-price ${pc}">${t.p}</span>
+    </div>
+  </div>`;
+}
+
+function render() {
+  const list = getList();
+  const g = document.getElementById('grid');
+  g.innerHTML = list.map((t, i) => card(t, i)).join('');
+}
+
+function filterCat(cat) {
+  currentCategory = cat;
+  document.querySelectorAll('.chip').forEach(el => el.classList.remove('on'));
+  document.querySelector(`.chip:nth-child(${getChipIndex(cat)})`).classList.add('on');
+  render();
+}
+
+function getChipIndex(cat) {
+  const categories = ['all', 'hot', 'writing', 'image', 'video', 'audio', 'code', 'office', 'agent', 'toolbox'];
+  return categories.indexOf(cat) + 1;
+}
+
+function doSearch() {
+  const v = document.getElementById('si').value.trim();
+  if (!v) return;
+  
+  // 过滤工具列表
+  let filteredTools = T.filter(tool => 
+    tool.n.toLowerCase().includes(v.toLowerCase()) ||
+    tool.d.toLowerCase().includes(v.toLowerCase()) ||
+    tool.tg.some(tag => tag.toLowerCase().includes(v.toLowerCase()))
+  );
+  
+  // 更新网格显示
+  const g = document.getElementById('grid');
+  g.innerHTML = filteredTools.map((t, i) => card(t, i)).join('');
+}
+
+// Modal functions
+function openModal() {
+  document.getElementById('modal-ov').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modal-ov').classList.remove('open');
+}
+
+function ovClick(e) {
+  if (e.target === document.getElementById('modal-ov')) {
+    closeModal();
+  }
+}
+
+function submit() {
+  const n = document.getElementById('fn').value.trim();
+  const u = document.getElementById('fu').value.trim();
+  if (!n || !u) {
+    alert('请填写名称和网址');
+    return;
+  }
+  
+  // 这里应该调用API提交工具
+  console.log('提交工具:', {
+    name: n,
+    url: u,
+    category: document.getElementById('fc').value,
+    description: document.getElementById('fd').value.trim() || '用户提交的 AI 工具。',
+    price_type: document.getElementById('fp').value
+  });
+  
+  // 模拟提交成功
+  alert('工具提交成功！等待审核');
+  document.getElementById('fn').value = '';
+  document.getElementById('fu').value = '';
+  document.getElementById('fd').value = '';
+  closeModal();
+}
+
+// 初始化
+window.addEventListener('load', () => {
+  setTimeout(() => document.getElementById('loader').classList.add('out'), 500);
+  render();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+name = "aisstt-fun"
+compatibility_date = "2026-03-28"
+compatibility_flags = ["nodejs_compat"]
+
+[site]
+bucket = "./output"
+entry-point = "./output"
+
+[[routes]]
+pattern = "/*"
+zone_name = "aisstt.fun"
+
+# 环境变量配置
+[vars]
+SUPABASE_URL = "https://tlahuhfnhatpacnrhzsm.supabase.co"

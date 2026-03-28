@@ -1,0 +1,23 @@
+[
+  {
+    "name": "AI Writing Assistant",
+    "description": "智能写作助手，支持多语言内容生成",
+    "category": "写作",
+    "url": "https://example.com/ai-writing",
+    "price_type": "免费+"
+  },
+  {
+    "name": "Image Generator Pro",
+    "description": "AI图像生成工具，支持多种艺术风格",
+    "category": "图片",
+    "url": "https://example.com/image-gen",
+    "price_type": "付费"
+  },
+  {
+    "name": "OpenCode AI",
+    "description": "开源AI编程助手，支持多种语言",
+    "category": "编程",
+    "url": "https://github.com/opencode-ai",
+    "price_type": "免费"
+  }
+]

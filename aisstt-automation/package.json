@@ -1,0 +1,20 @@
+{
+  "name": "aisstt-fun-automation",
+  "version": "1.0.0",
+  "description": "AI工具自动化发布系统 - 全自动部署",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "scrape": "node scripts/scrape.js",
+    "generate": "node scripts/generate.js",
+    "deploy": "node scripts/deploy.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.2",
+    "axios": "^1.6.2",
+    "cheerio": "^1.0.0-rc.12",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "node-cron": "^3.0.3"
+  }
+}
