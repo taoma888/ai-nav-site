@@ -1,0 +1,13 @@
+name = "aisstt-backend"
+compatibility_date = "2024-01-01"
+
+# D1 Database binding
+[[d1_databases]]
+binding = "DB"
+database_name = "aisstt-db"
+database_id = "e9a9d8df-05d5-4cdd-a253-f7e9ce17f8e4"
+
+# 开发环境配置
+[dev]
+port = 8787
+local_protocol = "http"

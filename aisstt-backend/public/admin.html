@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>审核后台 - AISSTT</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: #f5f7fa;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    
+    .header {
+      background: white;
+      padding: 20px 30px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    h1 {
+      color: #333;
+      font-size: 24px;
+    }
+    
+    .stats {
+      display: flex;
+      gap: 20px;
+    }
+    
+    .stat-item {
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-size: 24px;
+      font-weight: bold;
+      color: #667eea;
+    }
+    
+    .stat-label {
+      font-size: 12px;
+      color: #999;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .filters {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    
+    .filters select,
+    .filters input {
+      padding: 10px 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    
+    .filters button {
+      padding: 10px 20px;
+      background: #667eea;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-bottom: 15px;
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr 1fr;
+      gap: 20px;
+      align-items: center;
+    }
+    
+    .card-info h3 {
+      color: #333;
+      margin-bottom: 5px;
+      font-size: 18px;
+    }
+    
+    .card-info a {
+      color: #667eea;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    
+    .card-info a:hover {
+      text-decoration: underline;
+    }
+    
+    .card-meta {
+      font-size: 13px;
+      color: #999;
+    }
+    
+    .status-badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    
+    .status-pending {
+      background: #fff3cd;
+      color: #856404;
+    }
+    
+    .status-approved {
+      background: #d4edda;
+      color: #155724;
+    }
+    
+    .status-rejected {
+      background: #f8d7da;
+      color: #721c24;
+    }
+    
+    .actions {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    
+    .btn-approve {
+      background: #28a745;
+      color: white;
+    }
+    
+    .btn-approve:hover {
+      background: #218838;
+    }
+    
+    .btn-reject {
+      background: #dc3545;
+      color: white;
+    }
+    
+    .btn-reject:hover {
+      background: #c82333;
+    }
+    
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: #999;
+    }
+    
+    .empty {
+      text-align: center;
+      padding: 60px 20px;
+      color: #999;
+    }
+    
+    .empty-icon {
+      font-size: 48px;
+      margin-bottom: 15px;
+    }
+    
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    
+    .pagination button {
+      padding: 8px 16px;
+      border: 2px solid #e0e0e0;
+      background: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    
+    .pagination button.active {
+      background: #667eea;
+      color: white;
+      border-color: #667eea;
+    }
+    
+    .pagination button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>📋 审核后台</h1>
+      <div class="stats">
+        <div class="stat-item">
+          <div class="stat-value" id="pendingCount">0</div>
+          <div class="stat-label">待审核</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value" id="approvedCount">0</div>
+          <div class="stat-label">已通过</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value" id="rejectedCount">0</div>
+          <div class="stat-label">已拒绝</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="filters">
+      <select id="statusFilter">
+        <option value="all">全部状态</option>
+        <option value="pending">待审核</option>
+        <option value="approved">已通过</option>
+        <option value="rejected">已拒绝</option>
+      </select>
+      <select id="categoryFilter">
+        <option value="all">全部分类</option>
+        <option value="科技">科技</option>
+        <option value="新闻">新闻</option>
+        <option value="博客">博客</option>
+        <option value="视频">视频</option>
+        <option value="工具">工具</option>
+        <option value="其他">其他</option>
+      </select>
+      <button onclick="loadSites()">刷新</button>
+    </div>
+    
+    <div id="sitesList"></div>
+    
+    <div class="pagination" id="pagination"></div>
+  </div>
+
+  <script>
+    let currentPage = 1;
+    const limit = 20;
+
+    async function loadSites() {
+      const statusFilter = document.getElementById('statusFilter').value;
+      const categoryFilter = document.getElementById('categoryFilter').value;
+      
+      let url = `/api/list?page=${currentPage}&limit=${limit}`;
+      if (categoryFilter !== 'all') {
+        url += `&category=${encodeURIComponent(categoryFilter)}`;
+      }
+      
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        if (data.success) {
+          renderSites(data.data.sites);
+          renderPagination(data.data.pagination);
+          updateStats();
+        }
+      } catch (error) {
+        console.error('Load sites error:', error);
+      }
+    }
+
+    function renderSites(sites) {
+      const container = document.getElementById('sitesList');
+      
+      if (sites.length === 0) {
+        container.innerHTML = `
+          <div class="empty">
+            <div class="empty-icon">📭</div>
+            <div>暂无数据</div>
+          </div>
+        `;
+        return;
+      }
+      
+      container.innerHTML = sites.map(site => `
+        <div class="card">
+          <div class="card-info">
+            <h3>${escapeHtml(site.title)}</h3>
+            <a href="${escapeHtml(site.url)}" target="_blank">${escapeHtml(site.url)}</a>
+          </div>
+          <div>
+            <div class="card-meta">${escapeHtml(site.desc || '无描述')}</div>
+          </div>
+          <div>
+            <span class="status-badge status-${site.status}">${getStatusText(site.status)}</span>
+            <div class="card-meta">${site.category}</div>
+          </div>
+          <div class="actions">
+            ${site.status === 'pending' ? `
+              <button class="btn btn-approve" onclick="review(${site.id}, 'approve')">通过</button>
+              <button class="btn btn-reject" onclick="review(${site.id}, 'reject')">拒绝</button>
+            ` : '<span class="card-meta">已审核</span>'}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderPagination(pagination) {
+      const container = document.getElementById('pagination');
+      const { page, totalPages } = pagination;
+      
+      if (totalPages <= 1) {
+        container.innerHTML = '';
+        return;
+      }
+      
+      let html = '';
+      if (page > 1) {
+        html += `<button onclick="goToPage(${page - 1})">上一页</button>`;
+      }
+      
+      for (let i = Math.max(1, page - 2); i <= Math.min(totalPages, page + 2); i++) {
+        html += `<button class="${i === page ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+      }
+      
+      if (page < totalPages) {
+        html += `<button onclick="goToPage(${page + 1})">下一页</button>`;
+      }
+      
+      container.innerHTML = html;
+    }
+
+    function goToPage(page) {
+      currentPage = page;
+      loadSites();
+    }
+
+    async function review(id, action) {
+      if (!confirm(`确定要${action === 'approve' ? '通过' : '拒绝'}该网站吗？`)) {
+        return;
+      }
+      
+      try {
+        const response = await fetch('/api/review', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ id, action })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          alert('审核成功！');
+          loadSites();
+        } else {
+          alert('审核失败：' + data.error);
+        }
+      } catch (error) {
+        alert('审核失败：' + error.message);
+      }
+    }
+
+    async function updateStats() {
+      // 实际项目中应调用统计接口
+      // 这里简化处理
+    }
+
+    function getStatusText(status) {
+      const map = {
+        pending: '待审核',
+        approved: '已通过',
+        rejected: '已拒绝'
+      };
+      return map[status] || status;
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // 初始化加载
+    loadSites();
+
+    // 监听筛选器变化
+    document.getElementById('statusFilter').addEventListener('change', () => {
+      currentPage = 1;
+      loadSites();
+    });
+    
+    document.getElementById('categoryFilter').addEventListener('change', () => {
+      currentPage = 1;
+      loadSites();
+    });
+  </script>
+</body>
+</html>
