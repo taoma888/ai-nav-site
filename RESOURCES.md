@@ -29,7 +29,7 @@
 | 4 | Notion AI | https://notion.so | 笔记/写作/效率 | ✅ 已收录 | 2026-03-12 |
 | 5 | GitHub Copilot | https://github.com/features/copilot | 编程/开发/效率 | ✅ 已收录 | 2026-03-12 |
 | 6 | Runway | https://runwayml.com | 视频/生成/编辑 | ✅ 已收录 | 2026-03-12 |
-| 7 | 待添加 | - | - | ⏳ 待收录 | - |
+| 7 | agent-qa | https://vostride.com | 应用测试/持久记忆/MCP | ✅ 已收录 | 2026-10-26 |
 | 8 | 待添加 | - | - | ⏳ 待收录 | - |
 
 **待收录推荐：**
